@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$reply['title']}</title>
+<link rel="stylesheet" type="text/css" href="./source/modules/stonefish_grabgifts/template/css/style.css">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="Description" content="{$reply['description']}" />
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Mobile Devices Support @end -->
+<style>
+body{background-color:{$reply['bgcolor']};color:{$reply['textcolor']};}
+A:link,A:visited,A:hover ,A:active{ color: {$reply['textcolor']};}
+.top span{ color: {$reply['textcolort']};}
+.top a{background-color:{$reply['textcolort']};color: {$reply['bgcolor']};}
+
+.pri .pricebg{border:8px solid {$reply['textcolorb']}; background-color:{$reply['bgcolorjiang']};}
+.pri p{color:{$reply['textcolorjiang']};}
+
+.sub_b{background-color: {$reply['bgcolorbottom']};}
+.sub_b dd{color: {$reply['textcolorbottom']}; background: {$reply['bgcolorbottoman']};}
+.sub_b dd a{ display: block; color: {$reply['textcolorbottom']};}
+.sub_b dt{background:{$reply['bgcolorbottoman']}}
+.sub_b dt span{background:{$reply['textcolort']};}
+.btn input{color:{$reply['textcolorjiang']};background-color:{$reply['bgcolorjiang']};}
+.copyright{color:{$reply['textcolor']};}
+.copyright a:link,.copyright a:visited,.copyright a:hover,.copyright a:active{color:{$reply['textcolor']};}
+</style>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+ <div class="center"> 	
+	{if !empty($mygift)}
+	<div class="top"><span>{$mygift['nickname']}</span> 领奖确认</div>
+	{else}
+	<div class="top"><span>出错了!联系管理员</span></div>
+    {/if}
+	<div class="con">
+	<div class="pri">
+		<div class="pricebg">		    
+			<p style="text-align:left;line-height:22px;">注意:此页为商家兑奖页,用户不要输入任何内容;请商家确认此用户的领奖资格,确认后输入您的密码即可完成为用户兑奖!<br/>{if $mygift['realname']!=''}领奖人姓名:{$mygift['realname']}<br/>{/if}{if $mygift['mobile']!=''}领奖人电话:{$mygift['mobile']}<br/>{/if}{if $mygift['nickname']!=''}领奖人微信:{$mygift['nickname']}<br/>{/if}{if $mygift['qqhao']!=''}领奖人QQ:{$mygift['qqhao']}<br/>{/if}{if $mygift['email']!=''}领奖人邮箱:{$mygift['email']}<br/>{/if}{if $mygift['isaddress']!=''}领奖人地址:{$mygift['isaddress']}<br/>{/if}</p>
+		</div>
+	</div>	
+	<img class="infor" src="./source/modules/stonefish_grabgifts/template/images/pass.png" />
+	<form action="{php echo $this->createMobileUrl('duijiangaward', array('rid' => $rid,'giftid' => $giftid))}" method="post" id="form1">
+	<ul class="wrinfor">
+		<li class="pass"><div class="pad"><input type="password" name="awardpass"  placeholder="由商家输入兑奖密码" /></div></li>		
+	</ul>
+	<div class="btn" style="width:95%;margin:30px auto 30px;"><input type="submit" value="提交" style="width:100%;font-size:100%;" onclick="return submit_data()"/></div>
+	</form>
+	</div>
+    <div class="copyright">
+    {if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
+    </div>
+ 	<div class="sub_b">
+	    {if !empty($mygift)}
+			<dl>
+ 			    <dt><span>&nbsp;</span><img src="./source/modules/stonefish_grabgifts/template/images/a4.png"/></dt>
+ 			    <dd><a href="{$mygifturl}">我的活动页</a></dd>
+ 		    </dl>
+		{else}
+		    <dl>
+ 			    <dt><span>&nbsp;</span><a href="" class="lb"><img src="./source/modules/stonefish_grabgifts/template/images/a4.png" alt="" /></a></dt>
+ 			    <dd><a href="">出错了!联系管理员</a></dd>
+ 		    </dl>
+		{/if}
+ 	</div>
+ </div>
+<script type="text/javascript">
+<!--
+function submit_data()
+{
+	var form1     = document.getElementById("form1");	        	
+	var awardpass = form1.awardpass.value;
+	
+	if(awardpass==''){
+		alert('由商家输入兑奖密码');
+		return false;
+	}
+	return true;
+}
+//-->
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+
+	sharedata = {
+		title : "{$reply['sharetitle']}",
+		link : "{$shareurl}",
+		desc : "{$reply['sharecontent']}",
+		imgUrl :"{$picture}"
+	};
+	
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
+</script>
+</body>
+</html>

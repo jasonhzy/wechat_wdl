@@ -1,0 +1,16 @@
+	<div id="footer">
+		<span class="pull-left">
+			<p>{if empty($_W['setting']['copyright']['footerleft'])}Powered by <a href="http://www.b2ctui.com"><b>微动力</b></a> V4.12 &copy; 2014 <a href="http://www.b2ctui.com">www.b2ctui.com</a>{else}{$_W['setting']['copyright']['footerleft']}{/if}</p>
+		</span>
+		<span class="pull-right">
+			<p>{if empty($_W['setting']['copyright']['footerright'])}<a href="http://bbs.b2ctui.com">关于微动力</a>&nbsp;&nbsp;<a href="http://bbs.b2ctui.com/wiki/">微动力手册</a>{else}{$_W['setting']['copyright']['footerright']}{/if}&nbsp;&nbsp;{if !empty($_W['setting']['copyright']['statcode'])}{$_W['setting']['copyright']['statcode']}{/if}</p>
+		</span>
+	</div>
+	<div class="emotions" style="display:none;"></div>
+	<script>
+		{if !empty($_W['weid']) && $_W['account']['level'] == 2}
+			$.post('./account.php?act=fansync');
+		{/if}
+	</script>
+</body>
+</html>

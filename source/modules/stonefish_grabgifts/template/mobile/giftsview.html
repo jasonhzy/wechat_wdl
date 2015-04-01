@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$reply['title']}</title>
+<link rel="stylesheet" type="text/css" href="./source/modules/stonefish_grabgifts/template/css/style.css">
+<script language="javascript" src="./source/modules/stonefish_grabgifts/template/js/jquery-1.8.js"></script>
+<script language="javascript" src="./source/modules/stonefish_grabgifts/template/js/common.js"></script>
+<script language="javascript" src="./source/modules/stonefish_grabgifts/template/js/openshare.js"></script>
+<script language="javascript" src="./source/modules/stonefish_grabgifts/template/js/WeixinApi.js"></script>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta name="Description" content="{$reply['description']}" />
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Mobile Devices Support @end -->
+<style>
+body{background-color:{$reply['bgcolor']};color:{$reply['textcolor']};}
+A:link,A:visited,A:hover ,A:active{ color: {$reply['textcolor']};}
+.product {margin-top:10px;}
+.product li{ width: 96%; float: left; padding:0 2%;}
+.product{ border:1px solid {$reply['textcolorb']};}
+.product li dt{border:1px solid {$reply['textcolorb']};}
+.product li dd{color: {$reply['textcolor']}}
+.product li dd span{ color: {$reply['textcolort']};}
+
+.wenz h3{color: {$reply['bgcolorbottoman']};}
+
+.sub_b{background-color: {$reply['bgcolorbottom']};}
+.sub_b dd{color: {$reply['textcolorbottom']}; background: {$reply['bgcolorbottoman']};}
+.sub_b dd a{ display: block; color: {$reply['textcolorbottom']};}
+.sub_b dt{background:{$reply['bgcolorbottoman']}}
+.sub_b dt span{background:{$reply['textcolort']};}
+.paihang{color:{$reply['textcolorjiang']};background-color:{$reply['bgcolorjiang']}; text-align:center;}
+.copyright{color:{$reply['textcolor']};}
+.copyright a:link,.copyright a:visited,.copyright a:hover,.copyright a:active{color:{$reply['textcolor']};}
+</style>
+</head>
+<body>
+ <div class="center">
+    <div class="product">
+ 		<ul>
+			<li>
+ 				<dl>
+ 					<dt><img src="{$_W['attachurl']}{$giftinfo['awardpic']}"/></dt>
+ 					<dd>{$giftinfo['title']}</dd>
+ 					<dd>全部<span>{$giftinfo['total']}</span>份  剩余<span>{php echo $giftinfo['total']-$giftinfo['total_winning']}</span>份</dd>
+ 				</dl>
+ 			</li>	
+ 		</ul>
+ 	</div>
+	<div class="wenz">
+		<h3>奖品详细：</h3>
+ 		<p>{php echo htmlspecialchars_decode($giftinfo['description']);}</p>
+		
+		<h3>活动介绍：</h3>
+ 		<p>{$reply['description']}</p>
+ 		<h3>活动时间：</h3>
+ 		<p><span style="color:{$reply['textcolort']};">{php echo date('Y-m-d H:i', $reply['start_time']);} - {php echo date('Y-m-d H:i', $reply['end_time']);}</span></p>
+ 		<h3>活动详情：</h3>
+ 		<p>{php echo htmlspecialchars_decode($reply['content']);}</p>
+		<div class="copyright">
+		{if $reply['iscopyright']==1}<a href="{$reply['copyrighturl']}">&copy;{$reply['copyright']}</a>{else}<a href="javascript:;">{if empty($footer_off)}&copy;{if empty($_W['account']['name'])}微动力团队{else}{$_W['account']['name']}{/if}&nbsp;&nbsp;{$_W['setting']['copyright']['statcode']}{/if}</a>{/if}
+		</div> 
+ 	</div>
+ 	<div class="sub_b">
+ 		{if !empty($mygift)}
+		    <dl>
+ 			    <dt><span>&nbsp;</span><img src="./source/modules/stonefish_grabgifts/template/images/a4.png"/></dt>
+ 			    <dd><a href="{$mygifturl}">我的活动页</a></dd>
+ 		    </dl>
+		{else}
+		    <dl>
+ 			    <dt><span>&nbsp;</span><a href="{$regurl}" class="lb"><img src="./source/modules/stonefish_grabgifts/template/images/a4.png" alt="" /></a></dt>
+ 			    <dd><a href="{$regurl}">我要抢</a></dd>
+ 		    </dl>
+		{/if}
+ 	</div>
+ </div>
+<div class="share-layer"></div>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+
+	sharedata = {
+		title : "{$reply['sharetitle']}",
+		link : "{$shareurl}",
+		desc : "{$reply['sharecontent']}",
+		imgUrl :"{$picture}"
+	};
+	
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
+</script>
+</body>
+</html>

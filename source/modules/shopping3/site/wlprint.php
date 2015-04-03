@@ -161,7 +161,7 @@
 	
 	
 	function httppost1($params) {
-		$host = '42.121.115.77';
+		$host = '114.215.116.141';
 		$port = '8888';
 		//需要提交的post数据
 		$p = '';

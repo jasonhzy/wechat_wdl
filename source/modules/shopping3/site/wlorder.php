@@ -16,7 +16,7 @@ if($_GPC['d']=='checkout'){
 			'msg'=>'抱歉，您的购物车里没有任何商品，请先购买！',
 			'url'=>$this->createMobileUrl('wlindex'),
 		);
-		die(json_encode($return));
+		//die(json_encode($return));
 	}
 	$ordernum = pdo_fetchcolumn("SELECT count(id) FROM ".tablename('shopping3_order')." WHERE weid = :weid AND from_user='".$from."' AND ( status=0 OR  status=1 )", array(':weid' => $weid));
 	if($ordernum>=$set['order_limit'] && $set['order_limit']!=0){
@@ -69,7 +69,8 @@ if($_GPC['d']=='checkout'){
 			'seat_type'=>$_GPC['seat_type'],
 			'totalnum' => $_GPC['totalnum'],
 			'totalprice' => $_GPC['totalprice'],			
-			'remark'=>$_GPC['Remark'],
+			'remark'=>$_GPC['remark'],
+			'custnums'=>$_GPC['nums'],
 			'createtime' => TIMESTAMP,
 			'secretid'=>random(4,1),
 			//打印状态
